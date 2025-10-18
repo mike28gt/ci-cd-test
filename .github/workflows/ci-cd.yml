@@ -6,22 +6,26 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
+# Nombre del workflow en la pestaña Actions
 name: CI/CD - Java + Docker + Trivy + Deploy
 
+# El pipeline se ejecuta automáticamente cuando se hace push a la rama main o
+# cuando se crea o actualiza un pull request hacia main.
 on:
   push:
     branches: [ "main" ]
   pull_request:
 
 permissions:
-  contents: read
-  packages: write
-  id-token: write
+  contents: read   # permite leer el código fuente del repo
+  packages: write  # necesario para publicar imagenes en GitHub Container Registry (GHCR)
+  id-token: write  # permite autenticación OIDC
 
+# variables de entorno
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository }}:latest
-  IMAGE_SHA: ghcr.io/${{ github.repository }}:${{ github.sha }}
-  APP_PORT: 8080
+  IMAGE_NAME: ghcr.io/${{ github.repository }}:latest # nombre de la imagen Docker (última versión)
+  IMAGE_SHA: ghcr.io/${{ github.repository }}:${{ github.sha }} # imagen versionada por commit
+  APP_PORT: 8080 # puerto que se utiliza en el contenedor
 
 jobs:
   build-test-scan-push:
