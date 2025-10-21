@@ -56,7 +56,7 @@ jobs:
         with:
           image-ref: ${{ env.IMAGE_NAME }}
           format: 'table'
-          exit-code: '0'         # poner '1' para bloquear en HIGH/CRITICAL
+          exit-code: '1'         # poner '1' para bloquear en HIGH/CRITICAL
           vuln-type: 'os,library'
           severity: 'HIGH,CRITICAL'
 
